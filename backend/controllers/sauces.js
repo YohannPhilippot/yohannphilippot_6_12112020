@@ -1,6 +1,7 @@
-const Sauce = require('../models/sauce')
-const fs = require('fs')
+const Sauce = require('../models/sauce') //import du model sauce
+const fs = require('fs') //import du module file system
 
+//middleware pour afficher toutes les sauces
 exports.getAllSauces = (req, res, next) => {
     Sauce.find()
         .then((sauces) => {
@@ -11,6 +12,7 @@ exports.getAllSauces = (req, res, next) => {
         })
 }
 
+//middleware pour la création d'une sauce
 exports.createSauce = (req, res, next) => {
     const sauceObject = JSON.parse(req.body.sauce)
     delete sauceObject._id
@@ -27,6 +29,7 @@ exports.createSauce = (req, res, next) => {
         .catch(error => res.status(400).json({ error }))
 }
 
+//middleware pour afficher une sauce en particulier
 exports.getOneSauce = (req, res, next) => {
     Sauce.findOne({
         _id: req.params.id
@@ -39,6 +42,7 @@ exports.getOneSauce = (req, res, next) => {
         })
 }
 
+//middleware pour la suppression d'une sauce
 exports.deleteSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
@@ -52,6 +56,7 @@ exports.deleteSauce = (req, res, next) => {
         .catch(error => res.status(500).json({ error }))
 }
 
+//middleware pour la modification d'une sauce
 exports.modifySauce = (req, res, next) => {
     const sauce = new Sauce({
         _id: req.params.id,
@@ -71,7 +76,7 @@ exports.modifySauce = (req, res, next) => {
         })
 }
 
-
+//middleware pour la fonction like
 exports.likeSauce = (req, res, next) => {
     Sauce.findOne({ _id: req.params.id })
         .then(sauce => {
